@@ -10,6 +10,12 @@ class InputCron extends PureComponent {
       value,
     };
   }
+  componentWillReceiveProps(nextProps) {
+    console.log(nextProps);
+    if (JSON.stringify(nextProps.value) !== JSON.stringify(this.props.value)) {
+      this.setState({ value: nextProps.value })
+    }
+  }
   handleChange = (value) => {
     this.setState({
       value,
