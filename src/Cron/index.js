@@ -34,7 +34,12 @@ class CRON extends React.Component {
         break;
       }
     }
-
+    componentWillReceiveProps(nextProps) {
+      console.log(nextProps);
+      if (JSON.stringify(nextProps.value) !== JSON.stringify(this.props.value)) {
+      this.setState({ value: nextProps.value })
+      }
+    }
     // 秒
     const second = cronArr[0];
     let secondCycleStart = 1;
