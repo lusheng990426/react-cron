@@ -23,7 +23,7 @@ for (let i = 1; i < 13; i++) { monthOptions.push(i.toString()); }
 class CRON extends React.Component {
   constructor(props) {
     super(props);
-    const { value , type = ['minute', 'hour', 'day', 'month'] } = props;
+    const { value, type = ['minute', 'hour', 'day', 'month'] } = props;
     const values = value && value !== '' && cronValidate(value) ? value : '0 0 0 * * ?';
     const cronArr = values.split(' ');
     const time = ['second', 'minute', 'hour', 'day', 'month', 'week'];
@@ -32,12 +32,6 @@ class CRON extends React.Component {
       if (type.indexOf(time[i]) > -1) {
         TabsActiveKey = i + 1;
         break;
-      }
-    }
-    componentWillReceiveProps(nextProps) {
-      console.log(nextProps);
-      if (JSON.stringify(nextProps.value) !== JSON.stringify(this.props.value)) {
-      this.setState({ value: nextProps.value })
       }
     }
     // 秒
@@ -239,6 +233,14 @@ class CRON extends React.Component {
       type,
     };
   }
+
+  componentWillReceiveProps(nextProps) {
+    console.log(nextProps);
+    if (JSON.stringify(nextProps.value) !== JSON.stringify(this.props.value)) {
+      this.setState({ value: nextProps.value })
+    }
+  }
+
   // 生成复选框
   // eslint-disable-next-line react/sort-comp
   createChecks = (data, radiochecked, radio) => {
@@ -320,7 +322,7 @@ class CRON extends React.Component {
   };
 
   // CRON-秒-指定选择复选框
-  onSecndcheckChange=(checkedValues) => {
+  onSecndcheckChange = (checkedValues) => {
     const secondChecked = checkedValues.length > 0 ? checkedValues.join(',') : '0';
     this.setState({ secondChecked });
     if (this.state.SecondRadiochecked === 4) {
@@ -374,7 +376,7 @@ class CRON extends React.Component {
     }
   };
   // CRON-分钟-指定选择复选框
-  onMinuteCheckChange=(checkedValues) => {
+  onMinuteCheckChange = (checkedValues) => {
     const minuteChecked = checkedValues.length > 0 ? checkedValues.join(',') : '0';
     this.setState({ minuteChecked });
     if (this.state.minuteRadiochecked === 4) { this.changeState({ minVal: minuteChecked }); }
@@ -425,7 +427,7 @@ class CRON extends React.Component {
   };
 
   // CRON-小时-指定选择复选框
-  onHourCheckChange=(checkedValues) => {
+  onHourCheckChange = (checkedValues) => {
     const hourChecked = checkedValues.length > 0 ? checkedValues.join(',') : '0';
     this.setState({ hourChecked });
     if (this.state.hourRadiochecked == 4) { this.changeState({ hourVal: hourChecked }); }
@@ -492,7 +494,7 @@ class CRON extends React.Component {
     }
   };
   // CRON-日-指定选择复选框
-  onDaysCheckChange=(checkedValues) => {
+  onDaysCheckChange = (checkedValues) => {
     const daysChecked = checkedValues.length > 0 ? checkedValues.join(',') : '1';
     this.setState({ daysChecked });
     if (this.state.daysRadiochecked == 7) { this.changeState({ dayOfMonVal: daysChecked }); }
@@ -545,7 +547,7 @@ class CRON extends React.Component {
   };
 
   // CRON-月-指定选择复选框
-  onMonthCheckChange=(checkedValues) => {
+  onMonthCheckChange = (checkedValues) => {
     const monthChecked = checkedValues.length > 0 ? checkedValues.join(',') : '1';
     this.setState({ monthChecked });
     if (this.state.monthRadiochecked === 5) { this.changeState({ MonVal: monthChecked }); }
@@ -611,7 +613,7 @@ class CRON extends React.Component {
     }
   };
   // CRON-周-指定选择复选框
-  onWeekCheckChange=(checkedValues) => {
+  onWeekCheckChange = (checkedValues) => {
     const weekChecked = checkedValues.length > 0 ? checkedValues.join(',') : 'MON';
     this.setState({ weekChecked });
     if (this.state.weekRadiochecked === 6) { this.changeState({ dayOfWekVal: weekChecked }); }
@@ -663,12 +665,7 @@ class CRON extends React.Component {
       dayOfWekVal,
       yearVal,
     } = this.state;
-    const str = `${secondVal} ${
-      minVal} ${
-      hourVal} ${
-      dayOfMonVal} ${
-      MonVal} ${
-      dayOfWekVal}`;
+    const str = `${secondVal} ${minVal} ${hourVal} ${dayOfMonVal} ${MonVal} ${dayOfWekVal}`;
     const { onChange } = this.props;
     if (onChange) {
       onChange(str);
@@ -728,7 +725,7 @@ class CRON extends React.Component {
       TabsActiveKey,
       type,
     } = this.state;
-    const { style={ width: 576 }, className, lang="zh_CN"  } = this.props;
+    const { style = { width: 576 }, className, lang = "zh_CN" } = this.props;
     const i18n = getI18n(lang); // 国际化
     const Cls = classnames('cron', className);
 
@@ -741,25 +738,25 @@ class CRON extends React.Component {
       <div className={Cls} style={style}>
         <Tabs defaultActiveKey={String(TabsActiveKey)} onChange={this.callback}>
           {
-              this.isShowDom('second', type) &&
-              <TabPane tab={i18n.second} key="1">
-                <RadioGroup name="radiogroup" value={SecondRadiochecked} onChange={this.onSecondRadioChange}>
-                  <Radio style={radioStyle} value={1}>{i18n.EverySecond}</Radio>
-                  <Radio style={radioStyle} value={2}>
-                    {i18n.from} <InputNumber disabled={SecondRadiochecked !== 2} min={0} max={59} value={secondCycleStart} size="small" onChange={this.secondCycleStart} style={{ width: 100 }} />
+            this.isShowDom('second', type) &&
+            <TabPane tab={i18n.second} key="1">
+              <RadioGroup name="radiogroup" value={SecondRadiochecked} onChange={this.onSecondRadioChange}>
+                <Radio style={radioStyle} value={1}>{i18n.EverySecond}</Radio>
+                <Radio style={radioStyle} value={2}>
+                  {i18n.from} <InputNumber disabled={SecondRadiochecked !== 2} min={0} max={59} value={secondCycleStart} size="small" onChange={this.secondCycleStart} style={{ width: 100 }} />
                     &nbsp;- <InputNumber disabled={SecondRadiochecked !== 2} min={0} max={59} value={secondCycleEnd} size="small" onChange={this.secondCycleEnd} style={{ width: 100 }} /> {i18n.second1}
-                  </Radio>
-                  <Radio style={radioStyle} value={3}>
-                    {i18n.from} <InputNumber disabled={SecondRadiochecked !== 3} min={0} max={59} value={secondStart} size="small" onChange={this.secondStart} style={{ width: 100 }} /> {i18n.secondstart}
-                    {i18n.Every} <InputNumber disabled={SecondRadiochecked !== 3} min={0} max={59} value={secondEvery} size="small" onChange={this.secondEvery} style={{ width: 100 }} /> {i18n.second1}{i18n.doOne}
-                  </Radio>
-                  <Radio style={radioStyle} value={4}>{i18n.appoint}<br />
-                    <CheckboxGroup value={secondChecked.split(',')} style={{ width: '100%' }} onChange={this.onSecndcheckChange} >
-                      <Row> {this.createChecks(options, SecondRadiochecked, 4)} </Row>
-                    </CheckboxGroup>
-                  </Radio>
-                </RadioGroup>
-              </TabPane>
+                </Radio>
+                <Radio style={radioStyle} value={3}>
+                  {i18n.from} <InputNumber disabled={SecondRadiochecked !== 3} min={0} max={59} value={secondStart} size="small" onChange={this.secondStart} style={{ width: 100 }} /> {i18n.secondstart}
+                  {i18n.Every} <InputNumber disabled={SecondRadiochecked !== 3} min={0} max={59} value={secondEvery} size="small" onChange={this.secondEvery} style={{ width: 100 }} /> {i18n.second1}{i18n.doOne}
+                </Radio>
+                <Radio style={radioStyle} value={4}>{i18n.appoint}<br />
+                  <CheckboxGroup value={secondChecked.split(',')} style={{ width: '100%' }} onChange={this.onSecndcheckChange} >
+                    <Row> {this.createChecks(options, SecondRadiochecked, 4)} </Row>
+                  </CheckboxGroup>
+                </Radio>
+              </RadioGroup>
+            </TabPane>
           }
           {
             this.isShowDom('minute', type) &&
@@ -828,9 +825,9 @@ class CRON extends React.Component {
                 </Radio>
               </RadioGroup>
             </TabPane>
-         }
+          }
           {
-          this.isShowDom('month', type) &&
+            this.isShowDom('month', type) &&
             <TabPane tab={i18n.month} key="5">
               <RadioGroup name="radiogroup" value={monthRadiochecked} onChange={this.onMonthRadioChange}>
                 <Radio style={radioStyle} value={1}>{i18n.Everymonth}</Radio>
@@ -850,9 +847,9 @@ class CRON extends React.Component {
                 </Radio>
               </RadioGroup>
             </TabPane>
-         }
+          }
           {
-          this.isShowDom('week', type) &&
+            this.isShowDom('week', type) &&
             <TabPane tab={i18n.week} key="6">
               <RadioGroup name="radiogroup" value={weekRadiochecked} onChange={this.onWeekRadioChange}>
                 <Radio style={radioStyle} value={1}>{i18n.Everyweek}</Radio>
@@ -860,20 +857,20 @@ class CRON extends React.Component {
                 <Radio style={radioStyle} value={3}>
                   {i18n.from}{i18n.week1} <Select disabled={weekRadiochecked !== 3} value={weekCycleStart} size="small" onChange={this.weekCycleStart} style={{ width: 100 }}>
                     {children}
-                                            </Select>
+                  </Select>
                     &nbsp;- <Select disabled={weekRadiochecked !== 3} value={weekCycleEnd} size="small" onChange={this.weekCycleEnd} style={{ width: 100 }}>
-                      {children}
-                    </Select>
+                    {children}
+                  </Select>
                 </Radio>
                 <Radio style={radioStyle} value={4}>
                   {i18n.monthweek} <InputNumber disabled={weekRadiochecked !== 4} min={1} max={5} value={weekStart} size="small" onChange={this.weekStart} style={{ width: 100 }} /> {i18n.week3}
                   {i18n.week2} <Select disabled={weekRadiochecked !== 4} value={weekEvery} size="small" onChange={this.weekEvery} style={{ width: 100 }} >
                     {children}
-                               </Select>
+                  </Select>
                 </Radio>
                 <Radio style={radioStyle} value={5}>{i18n.weekend} <Select disabled={weekRadiochecked !== 5} value={weekEnd} size="small" onChange={this.changeweekEnd} style={{ width: 100 }} >
                   {children}
-                                                                   </Select>
+                </Select>
                 </Radio>
                 <Radio style={radioStyle} value={6}>{i18n.appoint}<br />
                   <CheckboxGroup value={weekChecked.split(',')} style={{ width: '100%' }} onChange={this.onWeekCheckChange} >
